@@ -1,9 +1,11 @@
 # Parte 1: Miku OS
-Distro basada en Linux Mint XFCE.
 
-**Modificaciones implementadas:**
-1. Navegador y red: Se instaló qBittorrent eliminando el cliente antiguo.
-2. Entorno de desarrollo: Preinstalación de NeoVim, git, tmux y htop.
-3. Persistencia en /etc/skel: Banner de bienvenida automático al abrir la terminal para nuevos usuarios.
+Distribución personalizada basada en Linux Mint XFCE, construida utilizando Cubic.
 
-**Link de descarga del ISO:** [PEGAR_LINK_DE_DRIVE_AQUI]
+### Modificaciones Justificadas Implementadas:
+1. **Reemplazo de Software:** Se eliminó `transmission` (cliente torrent por defecto) y se instaló `qbittorrent` por ser una alternativa de software libre superior y más completa.
+2. **Entorno de Desarrollo:** Se preinstaló un entorno ágil por terminal incluyendo `neovim`, `git`, `tmux` y `htop`, dejando la máquina lista para trabajar sin configuraciones extra.
+3. **Persistencia y Personalización (/etc/skel):** Se modificó el archivo `.bashrc` base para incluir un banner de bienvenida automático ("BIENVENIDO A MIKU OS") que se ejecuta cada vez que un usuario nuevo abre la terminal, asegurando la persistencia de la personalización.
+
+**Descarga del ISO:**
+🔗 [Obtener el archivo .iso desde Google Drive](https://drive.google.com/drive/folders/1u7CQ9s14abOrQkdqMuZ9BfHZlWRenqu7?usp=sharing)
