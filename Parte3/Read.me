@@ -1,15 +1,37 @@
-# Proyecto Integrador - Sistemas Operativos
 
-**Integrantes:** * Jordan Reyes
-* Cayetano Cordova
-* Anthony Herrera
+The "BlackHatBash" phase focuses on hardening, automating, and validating the AeroReservas lab infrastructure. The goal of this stage was to transform a functional environment into a robust, secure, and automated infrastructure by applying systems administration best practices and rigorous quality control through integration testing.
 
-**Objetivo del Proyecto:** Recorrer la pila completa de un sistema Linux: desde la construcción de una distribución propia, el arranque de un kernel de 64 bits desde cero, hasta el despliegue de un laboratorio ofensivo.
+Technical Achievements
+1. Hardening and System Security
+The environment was configured to minimize the attack surface and ensure strict adherence to access policies:
 
-### Estructura del Repositorio
-* **Parte 1:** Distro Miku OS (Generada con Cubic a partir de Linux Mint).
-* **Parte 2:** Kernel de 64-bits compilado desde cero con soporte de paginación y modo largo.
-* **Parte 3:** Laboratorio Black Hat Bash.
+SSH Server Configuration (sshd_config): Optimized security parameters to restrict remote access, disable insecure authentication methods, and reinforce connection security.
 
-**Archivos Pesados y Evidencia (Video Demo / ISO):**
-🔗 [Enlace a Google Drive con el ISO de Miku OS y el Video Demostrativo](https://drive.google.com/drive/folders/1u7CQ9s14abOrQkdqMuZ9BfHZlWRenqu7?usp=sharing)
+Privilege Control (Least Privilege): Detailed management of sudo permissions for specific users, ensuring that each role is granted only the access necessary for its function.
+
+2. Automation and Infrastructure as Code (IaC)
+Service lifecycle management was optimized through:
+
+Orchestration with Docker-Compose: Implementation of a centralized docker-compose.yml to manage web services, databases, Redis caching, and FTP servers, ensuring environment consistency across deployments.
+
+Backup Management: Development of automation scripts for the creation and management of backups, ensuring the resilience and integrity of critical lab data.
+
+3. Validation and Quality Control
+To ensure system stability, an integration testing framework was implemented:
+
+Python Integration: Creation of automated validation scripts that verify service connectivity, response status, and correct inter-container communication, ensuring a flawless deployment.
+
+Repository / Package Structure
+Due to technical limitations regarding write permissions on the remote repository, the full documentation, test scripts, and final configurations are contained in the attached file: evidencia_parte3.tar.gz.
+
+Package Content (evidencia_parte3.tar.gz):
+conf/: System configurations (sshd_config, sudo policies).
+
+scripts/: Backup automation and maintenance scripts.
+
+docker/: docker-compose.yml file and network definitions.
+
+tests/: Integration test suite developed in Python to validate the environment.
+
+Resources
+Evidence Access (Google Drive): Part 3 Evidence Repository: https://drive.google.com/drive/folders/1lk4ZhpTnjZ_o4mN-TzdApzFXRrhz8pii
