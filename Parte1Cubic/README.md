@@ -1,4 +1,3 @@
-Aquí tienes la versión final en inglés, ajustada para reflejar solo la adición del nuevo software y manteniendo el tono profesional y técnico:
 
 Project: Miku OS - Part 1 (Custom Linux Distribution)
 Project Description
