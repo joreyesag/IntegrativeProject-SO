@@ -1,60 +1,59 @@
-Proyecto: Kernel x64 "Miku OS" - Parte 2
-Descripción del Proyecto
-La segunda fase de este proyecto consiste en la evolución de un sistema operativo de arranque mínimo hacia un entorno de ejecución de 64-bits (Long Mode). El objetivo principal es establecer una base sólida de hardware que permita la transición desde el modo protegido de 32-bits a un entorno de 64-bits, habilitando la capacidad de ejecutar lógica escrita en lenguaje C directamente sobre el hardware, sin depender de un sistema operativo anfitrión.
+Project: Kernel x64 "Miku OS" - Part 2
+Project Description
+The second phase of this project involves the evolution of a minimum viable bootloader into a functional 64-bit (Long Mode) execution environment. The primary objective is to establish a robust hardware foundation that allows for the transition from 32-bit protected mode to 64-bit mode, enabling the execution of logic written in C directly on the hardware without relying on a host operating system.
 
-Este sistema implementa un protocolo de arranque compatible con Multiboot2, realiza verificaciones de integridad de hardware, configura tablas de paginación de memoria y establece una GDT (Global Descriptor Table) para manejar correctamente los segmentos en 64-bits.
+This system implements a Multiboot2-compliant boot protocol, performs hardware integrity checks, configures memory paging structures, and establishes a GDT (Global Descriptor Table) to correctly manage 64-bit segments.
 
-¿Qué se hizo? (Desglose Técnico)
-El proceso se dividió en cuatro pilares fundamentales para lograr el arranque y la ejecución del kernel:
+Technical Breakdown
+The process was divided into four fundamental pillars to achieve successful kernel boot and execution:
 
-1. Verificación de Hardware y Seguridad
-Antes de ejecutar cualquier instrucción de alto nivel, el kernel realiza una serie de chequeos de compatibilidad:
+1. Hardware Verification and Security
+Before executing any high-level instructions, the kernel performs a series of compatibility checks:
 
-Multiboot2: Validación de la firma mágica para asegurar que el gestor de arranque (GRUB) cargó el kernel correctamente.
+Multiboot2: Validates the magic signature to ensure the bootloader (GRUB) loaded the kernel correctly.
 
-CPUID: Verificación de que el procesador soporta las instrucciones necesarias para operar en modo extendido.
+CPUID: Verifies that the processor supports the instructions required to operate in extended mode.
 
-Long Mode: Comprobación del soporte para arquitectura de 64-bits. Si el procesador no es compatible, el sistema se detiene y muestra un código de error (ERR [X]) en pantalla para evitar un fallo crítico (Triple Fault).
+Long Mode: Checks for 64-bit architecture support. If the processor is incompatible, the system halts and displays an error code (ERR [X]) on the screen to prevent a critical failure (Triple Fault).
 
-2. Gestión de Memoria y Paginación
-Para ejecutar código en 64-bits, es obligatorio implementar la paginación. Se configuraron las estructuras de memoria necesarias para mapear la memoria física a un espacio virtual de 1GB utilizando "huge pages" (páginas de 2MB). Esto permite que el sistema maneje la memoria de manera eficiente y segura al entrar en modo largo.
+2. Memory Management and Paging
+To execute 64-bit code, implementing paging is mandatory. We configured the necessary memory structures to identity-map physical memory to a 1GB virtual space using "huge pages" (2MB pages). This allows the system to manage memory efficiently and securely upon entering long mode.
 
-3. Configuración de la GDT y Transición a 64-bits
-Se implementó una GDT (Global Descriptor Table) de 64-bits. Este componente es esencial para definir los descriptores de código y datos que el procesador utiliza para gestionar la protección y los privilegios en modo de 64-bits. Una vez cargada la GDT, se ejecuta un Far Jump para transferir el control al código de 64-bits.
+3. GDT Configuration and 64-bit Transition
+We implemented a 64-bit GDT (Global Descriptor Table). This component is essential for defining the code and data descriptors the processor uses to manage protection and privileges in 64-bit mode. Once the GDT is loaded, a Far Jump is executed to transfer control to the 64-bit code.
 
-4. Interfaz y Ejecución en C
-Se eliminó la dependencia de librerías estándar (freestanding) para permitir la ejecución de kernel_main(). La función de impresión interactúa directamente con el buffer de video VGA en la dirección física 0xb8000.
+4. Interface and C Execution
+We removed all dependencies on standard libraries (freestanding) to allow the execution of kernel_main(). The printing function interacts directly with the VGA video buffer at physical address 0xb8000.
 
-El sistema preserva el indicador visual del "OK" del arranque inicial.
+The system preserves the initial "OK" visual indicator from the bootloader.
 
-Se despliega el título "KERNEL X64 - MIKU OS" en cian brillante.
+Displays the title "KERNEL X64 - MIKU OS" in bright cyan.
 
-Se muestran los integrantes del grupo "Jordan Reyes, Cayetano Cordoba, Anthony Herrera" en blanco brillante en la línea inferior.
+Displays the group members "Jordan Reyes, Cayetano Cordoba, Anthony Herrera" in bright white on the line below.
 
-Estructura del Repositorio
+Repository Structure
 Plaintext
 .
-├── dist/                # Binarios generados (kernel.iso)
+├── dist/                # Generated binaries (kernel.iso)
 ├── src/
-│   ├── boot/            # Archivos de ensamblador (header, main, main64)
-│   └── kernel.c         # Lógica principal del sistema en C
-├── targets/x86_64/      # Scripts de enlace (linker.ld) y configuración GRUB
-├── Dockerfile           # Receta del entorno de compilación aislado
-└── Makefile             # Automatización del proceso de build
-Instrucciones de Construcción y Ejecución
-Requisitos previos
-Docker instalado.
+│   ├── boot/            # Assembly source files (header, main, main64)
+│   └── kernel.c         # Main system logic in C
+├── targets/x86_64/      # Linker scripts (linker.ld) and GRUB configuration
+├── Dockerfile           # Isolated build environment recipe
+└── Makefile             # Build process automation
+Build and Execution Instructions
+Prerequisites
+Docker installed.
 
-qemu-system-x86_64 (para emulación).
+qemu-system-x86_64 (for emulation).
 
-Construcción (One-liner)
-Para compilar todo el proyecto y generar la ISO, ejecuta el siguiente comando en la raíz del proyecto:
+Build (One-liner)
+To compile the entire project and generate the ISO, execute the following command in the project root:
 
 Bash
 make build
-Ejecución
-Para emular el sistema y verificar el arranque funcional en QEMU, utiliza:
+Execution
+To emulate the system and verify successful booting in QEMU, use:
 
 Bash
 qemu-system-x86_64 -cdrom dist/kernel.iso -display sdl
-Desarrollado para el curso de Ingeniería de Sistemas.
