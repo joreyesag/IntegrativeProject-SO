@@ -31,16 +31,6 @@ Displays the title "KERNEL X64 - MIKU OS" in bright cyan.
 
 Displays the group members "Jordan Reyes, Cayetano Cordoba, Anthony Herrera" in bright white on the line below.
 
-Repository Structure
-Plaintext
-.
-├── dist/                # Generated binaries (kernel.iso)
-├── src/
-│   ├── boot/            # Assembly source files (header, main, main64)
-│   └── kernel.c         # Main system logic in C
-├── targets/x86_64/      # Linker scripts (linker.ld) and GRUB configuration
-├── Dockerfile           # Isolated build environment recipe
-└── Makefile             # Build process automation
 Build and Execution Instructions
 Prerequisites
 Docker installed.
